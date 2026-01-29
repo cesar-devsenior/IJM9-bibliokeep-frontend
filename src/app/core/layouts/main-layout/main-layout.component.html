@@ -1,0 +1,138 @@
+<!-- Mobile overlay (drawer backdrop) -->
+<div
+  class="fixed inset-0 z-40 bg-slate-950/50 backdrop-blur-sm lg:hidden"
+  [ngClass]="{ hidden: !isMobileDrawerOpen() }"
+  (click)="closeMobileDrawer()"
+></div>
+
+<div class="min-h-dvh bg-slate-50 text-slate-900">
+  <!-- Sidebar (drawer on mobile, fixed on desktop) -->
+  <aside
+    class="fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-slate-200 bg-white shadow-sm transition-transform duration-200 lg:translate-x-0 lg:shadow-none"
+    [ngClass]="{
+      '-translate-x-full': !isMobileDrawerOpen(),
+      'translate-x-0': isMobileDrawerOpen(),
+      'lg:w-20': isSidebarCollapsed(),
+      'lg:w-72': !isSidebarCollapsed()
+    }"
+    aria-label="Sidebar"
+  >
+    <!-- Sidebar header -->
+    <div class="flex items-center justify-between gap-3 border-b border-slate-200 px-4 py-3">
+      <a
+        class="flex items-center gap-2 font-semibold tracking-tight text-slate-900"
+        routerLink="/dashboard"
+        (click)="closeMobileDrawer()"
+      >
+        <span
+          class="grid size-9 place-items-center rounded-xl bg-slate-900 text-white"
+          aria-hidden="true"
+        >
+          BK
+        </span>
+        <span class="text-base" [ngClass]="{ 'lg:hidden': isSidebarCollapsed() }">BiblioKeep</span>
+      </a>
+
+      <!-- Close button (mobile) -->
+      <button
+        type="button"
+        class="inline-flex items-center justify-center rounded-lg p-2 text-slate-700 hover:bg-slate-100 active:bg-slate-200 lg:hidden"
+        (click)="closeMobileDrawer()"
+        aria-label="Cerrar menú"
+      >
+        <lucide-icon [img]="X" class="h-5 w-5"></lucide-icon>
+      </button>
+    </div>
+
+    <!-- Nav -->
+    <nav class="flex-1 overflow-y-auto p-3">
+      <ul class="space-y-1">
+        @for (item of navItems; track item.route) {
+          <li>
+            <a
+              class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+              routerLinkActive="bg-slate-900 text-white hover:bg-slate-900 hover:text-white"
+              [routerLink]="item.route"
+              (click)="closeMobileDrawer()"
+            >
+              <lucide-icon [img]="item.icon" class="h-5 w-5 shrink-0"></lucide-icon>
+              <span class="truncate" [ngClass]="{ 'lg:hidden': isSidebarCollapsed() }">
+                {{ item.label }}
+              </span>
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <!-- Sidebar footer -->
+    <div class="border-t border-slate-200 p-3">
+      <div
+        class="rounded-xl bg-slate-50 p-3 text-xs text-slate-600"
+        [ngClass]="{ 'lg:hidden': isSidebarCollapsed() }"
+      >
+        UI base (Tailwind + Lucide). Próximo: auth, estados y datos reales.
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main column -->
+  <div
+    class="flex min-h-dvh flex-col"
+    [ngClass]="{ 'lg:pl-20': isSidebarCollapsed(), 'lg:pl-72': !isSidebarCollapsed() }"
+  >
+    <!-- Header -->
+    <header class="sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur">
+      <div class="flex items-center justify-between gap-3 px-4 py-3 lg:px-6">
+        <div class="flex items-center gap-2">
+          <!-- Hamburger (mobile) -->
+          <button
+            type="button"
+            class="inline-flex items-center justify-center rounded-lg p-2 text-slate-700 hover:bg-slate-100 active:bg-slate-200 lg:hidden"
+            (click)="openMobileDrawer()"
+            aria-label="Abrir menú"
+          >
+            <lucide-icon [img]="Menu" class="h-5 w-5"></lucide-icon>
+          </button>
+
+          <!-- Collapse toggle (desktop) -->
+          <button
+            type="button"
+            class="hidden items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 active:bg-slate-200 lg:inline-flex"
+            (click)="toggleDesktopSidebar()"
+          >
+            <span class="text-slate-900">BiblioKeep</span>
+            <span class="text-slate-400">·</span>
+            <span class="text-slate-600">
+              {{ isSidebarCollapsed() ? 'Expandir' : 'Colapsar' }}
+            </span>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <div class="hidden text-sm text-slate-600 sm:block">Gestor de biblioteca personal</div>
+          <div class="h-9 w-px bg-slate-200"></div>
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
+          >
+            <span
+              class="grid size-6 place-items-center rounded-lg bg-slate-900 text-xs font-semibold text-white"
+            >
+              U
+            </span>
+            <span class="hidden sm:inline">Perfil</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="flex-1 px-4 py-6 lg:px-6">
+      <div class="mx-auto w-full max-w-6xl">
+        <router-outlet />
+      </div>
+    </main>
+  </div>
+</div>
+
