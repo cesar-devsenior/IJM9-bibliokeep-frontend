@@ -112,17 +112,34 @@
         <div class="flex items-center gap-2">
           <div class="hidden text-sm text-slate-600 sm:block">Gestor de biblioteca personal</div>
           <div class="h-9 w-px bg-slate-200"></div>
-          <button
-            type="button"
-            class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
-          >
-            <span
-              class="grid size-6 place-items-center rounded-lg bg-slate-900 text-xs font-semibold text-white"
+          <div class="relative">
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
+              (click)="toggleProfileMenu()"
+              aria-haspopup="true"
+              [attr.aria-expanded]="isProfileMenuOpen()"
             >
-              U
-            </span>
-            <span class="hidden sm:inline">Perfil</span>
-          </button>
+              <span
+                class="grid size-6 place-items-center rounded-lg bg-slate-900 text-xs font-semibold text-white"
+              >
+                U
+              </span>
+              <span class="hidden sm:inline">Perfil</span>
+            </button>
+
+@if (isProfileMenuOpen()) {
+  <div class="absolute right-0 mt-2 w-40 rounded-md bg-white border border-slate-200 shadow-lg z-50">
+    <button
+      type="button"
+      class="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100"
+      (click)="logout()"
+    >
+      Cerrar sesión
+    </button>
+  </div>
+}
+          </div>
         </div>
       </div>
     </header>

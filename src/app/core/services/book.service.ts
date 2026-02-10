@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Book } from '../models/book.model';
+import { StorageService } from './storage.service';
 
 export type BookRequestDTO = Omit<Book, 'id'>;
 
@@ -10,7 +11,9 @@ export type BookRequestDTO = Omit<Book, 'id'>;
 export class BookService {
   private readonly baseUrl = 'http://localhost:8080/api/books';
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(
+    private readonly http: HttpClient, 
+    private readonly storage: StorageService) {}
 
   getAllBooks(userId?: string): Observable<Book[]> {
     return this.http.get<Book[]>(this.baseUrl, { headers: this.buildHeaders(userId) });
@@ -30,7 +33,10 @@ export class BookService {
   private buildHeaders(userId?: string): HttpHeaders | undefined {
     // Backend actual requiere header "user-id" (sin seguridad/JWT aún).
     if (!userId) return undefined;
-    return new HttpHeaders({ 'user-id': userId });
+    return new HttpHeaders({
+        'Authorization': `Bearer ${this.storage.getToken()}`,
+         'user-id': userId 
+        });
   }
 }
 

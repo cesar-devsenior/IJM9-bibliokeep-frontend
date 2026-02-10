@@ -1,6 +1,7 @@
 import { NgClass } from '@angular/common';
-import { Component, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import {
   BookOpen,
   Handshake,
@@ -26,6 +27,10 @@ type NavItem = {
 export class MainLayoutComponent {
   protected readonly isMobileDrawerOpen = signal(false);
   protected readonly isSidebarCollapsed = signal(false);
+  protected readonly isProfileMenuOpen = signal(false);
+
+  protected readonly auth = inject(AuthService);
+  protected readonly router = inject(Router);
 
   // Icon refs for <lucide-icon [img]="...">
   protected readonly Menu = Menu;
@@ -47,6 +52,20 @@ export class MainLayoutComponent {
 
   protected toggleDesktopSidebar(): void {
     this.isSidebarCollapsed.update((v) => !v);
+  }
+
+  protected toggleProfileMenu(): void {
+    this.isProfileMenuOpen.update(v => !v);
+  }
+
+  protected closeProfileMenu(): void {
+    this.isProfileMenuOpen.set(false);
+  }
+
+  protected logout(): void {
+    this.auth.logout();
+    this.closeProfileMenu();
+    this.router.navigateByUrl("/login");
   }
 }
 
