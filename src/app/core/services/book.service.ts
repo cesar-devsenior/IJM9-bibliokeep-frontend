@@ -15,28 +15,19 @@ export class BookService {
     private readonly http: HttpClient, 
     private readonly storage: StorageService) {}
 
-  getAllBooks(userId?: string): Observable<Book[]> {
-    return this.http.get<Book[]>(this.baseUrl, { headers: this.buildHeaders(userId) });
+  getAllBooks(): Observable<Book[]> {
+    return this.http.get<Book[]>(this.baseUrl);
   }
 
-  searchBooks(query: string, userId?: string): Observable<Book[]> {
+  searchBooks(query: string): Observable<Book[]> {
     return this.http.get<Book[]>(`${this.baseUrl}/search`, {
-      params: { q: query },
-      headers: this.buildHeaders(userId)
+      params: { q: query }
     });
   }
 
-  updateBook(id: number, dto: BookRequestDTO, userId?: string): Observable<Book> {
-    return this.http.put<Book>(`${this.baseUrl}/${id}`, dto, { headers: this.buildHeaders(userId) });
+  updateBook(id: number, dto: BookRequestDTO): Observable<Book> {
+    return this.http.put<Book>(`${this.baseUrl}/${id}`, dto);
   }
 
-  private buildHeaders(userId?: string): HttpHeaders | undefined {
-    // Backend actual requiere header "user-id" (sin seguridad/JWT aún).
-    if (!userId) return undefined;
-    return new HttpHeaders({
-        'Authorization': `Bearer ${this.storage.getToken()}`,
-         'user-id': userId 
-        });
-  }
 }
 

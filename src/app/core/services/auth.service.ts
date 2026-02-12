@@ -4,7 +4,7 @@ import { StorageService } from "./storage.service";
 import { LoginCredentials } from "../models/login-credentials.model";
 import { AuthResponse } from "../models/auth-response.model";
 import { User } from "../models/user.model";
-import { catchError, Observable, tap } from "rxjs";
+import { Observable, tap } from "rxjs";
 
 @Injectable({
     providedIn: "root"

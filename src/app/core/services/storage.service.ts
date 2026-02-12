@@ -1,4 +1,6 @@
 import { Injectable } from "@angular/core";
+import { jwtDecode } from "jwt-decode";
+import { TokenInformacion } from "../models/auth-response.model";
 
 @Injectable({ providedIn: "root" })
 export class StorageService {
@@ -15,9 +17,21 @@ export class StorageService {
 
     removeToken(): void {
         this.storage.removeItem(this.TOKEN_KEY);
-    } 
+    }
 
     isAuthenticated(): boolean {
         return this.getToken() !== null;
+    }
+
+    getEmail(): string {
+        const info = jwtDecode(this.getToken() ?? '') as TokenInformacion;
+
+        return info.sub;
+    }
+
+    hasRole(role: string): boolean {
+        const info = jwtDecode(this.getToken() ?? '') as TokenInformacion;
+
+        return info.roles.filter(r => r === role).length === 1;
     }
 }

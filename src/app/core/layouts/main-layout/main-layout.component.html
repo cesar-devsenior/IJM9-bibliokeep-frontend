@@ -48,19 +48,21 @@
     <nav class="flex-1 overflow-y-auto p-3">
       <ul class="space-y-1">
         @for (item of navItems; track item.route) {
-          <li>
-            <a
-              class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900"
-              routerLinkActive="bg-slate-900 text-white hover:bg-slate-900 hover:text-white"
-              [routerLink]="item.route"
-              (click)="closeMobileDrawer()"
-            >
-              <lucide-icon [img]="item.icon" class="h-5 w-5 shrink-0"></lucide-icon>
-              <span class="truncate" [ngClass]="{ 'lg:hidden': isSidebarCollapsed() }">
-                {{ item.label }}
-              </span>
-            </a>
-          </li>
+          @if (verifyRoles(item.roles)) {
+            <li>
+              <a
+                class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+                routerLinkActive="bg-slate-900 text-white hover:bg-slate-900 hover:text-white"
+                [routerLink]="item.route"
+                (click)="closeMobileDrawer()"
+              >
+                <lucide-icon [img]="item.icon" class="h-5 w-5 shrink-0"></lucide-icon>
+                <span class="truncate" [ngClass]="{ 'lg:hidden': isSidebarCollapsed() }">
+                  {{ item.label }}
+                </span>
+              </a>
+            </li>
+          }
         }
       </ul>
     </nav>
@@ -125,7 +127,7 @@
               >
                 U
               </span>
-              <span class="hidden sm:inline">Perfil</span>
+              <span class="hidden sm:inline">{{ userEmail() }}</span>
             </button>
 
 @if (isProfileMenuOpen()) {

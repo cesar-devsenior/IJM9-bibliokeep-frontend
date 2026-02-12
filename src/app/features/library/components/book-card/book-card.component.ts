@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, input, Input, output, Output } from '@angular/core';
 import { NgClass } from '@angular/common';
 
 import { Book, BookStatus } from '../../../../core/models/book.model';
@@ -10,10 +10,10 @@ import { Book, BookStatus } from '../../../../core/models/book.model';
   templateUrl: './book-card.component.html'
 })
 export class BookCardComponent {
-  @Input({ required: true }) book!: Book;
+  readonly book = input.required<Book>();
 
-  @Output() statusChange = new EventEmitter<BookStatus>();
-  @Output() ratingChange = new EventEmitter<number>();
+  readonly statusChange = output<BookStatus>();
+  readonly ratingChange = output<number>();
 
   protected readonly statuses: { value: BookStatus; label: string }[] = [
     { value: 'DESEADO', label: 'Deseado' },

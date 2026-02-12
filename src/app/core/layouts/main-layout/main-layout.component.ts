@@ -11,11 +11,13 @@ import {
   type LucideIconData,
   X
 } from 'lucide-angular';
+import { StorageService } from '../../services/storage.service';
 
 type NavItem = {
   label: string;
   route: string;
   icon: LucideIconData;
+  roles?: string[];
 };
 
 @Component({
@@ -31,6 +33,9 @@ export class MainLayoutComponent {
 
   protected readonly auth = inject(AuthService);
   protected readonly router = inject(Router);
+  protected readonly storage = inject(StorageService);
+
+  protected readonly userEmail = signal<string>(this.storage.getEmail());
 
   // Icon refs for <lucide-icon [img]="...">
   protected readonly Menu = Menu;
@@ -39,7 +44,7 @@ export class MainLayoutComponent {
   protected readonly navItems: NavItem[] = [
     { label: 'Dashboard', route: '/dashboard', icon: LayoutDashboard },
     { label: 'Biblioteca', route: '/library', icon: BookOpen },
-    { label: 'Préstamos', route: '/loans', icon: Handshake }
+    { label: 'Préstamos', route: '/loans', icon: Handshake, roles: ["ROLE_ADMIN"] }
   ];
 
   protected openMobileDrawer(): void {
@@ -60,6 +65,18 @@ export class MainLayoutComponent {
 
   protected closeProfileMenu(): void {
     this.isProfileMenuOpen.set(false);
+  }
+
+  protected verifyRoles(roles?: string[]): boolean {
+    if (!roles) {
+      return true;
+    }
+
+    const existingRoles = roles.map(r => this.storage.hasRole(r))
+      .filter(d => d)
+      .length;
+      
+    return existingRoles >= 1;
   }
 
   protected logout(): void {

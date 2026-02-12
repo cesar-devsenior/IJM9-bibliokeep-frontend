@@ -8,12 +8,6 @@ export type BookStatusFilter = BookStatus | 'ALL';
 
 @Injectable({ providedIn: 'root' })
 export class BookStoreService {
-  /**
-   * Sin seguridad aún, el backend actual exige el header "user-id".
-   * Ajusta este valor (o muévelo a un UserStore/AuthStore) cuando tengas auth.
-   */
-  private readonly userId = signal<string>('9f251e9c-4198-45c6-be8c-abe9945273d8');
-
   readonly books = signal<Book[]>([]);
   readonly isLoading = signal(false);
   readonly statusFilter = signal<BookStatusFilter>('ALL');
@@ -34,7 +28,7 @@ export class BookStoreService {
   loadCollection(): void {
     this.isLoading.set(true);
     this.bookApi
-      .getAllBooks(this.userId())
+      .getAllBooks()
       // .pipe(
       //   tap((books) => this.books.set(books)),
       //   catchError(() => of([] as Book[])),
@@ -58,7 +52,7 @@ export class BookStoreService {
     if (!q) return;
     this.isLoading.set(true);
     this.bookApi
-      .searchBooks(q, this.userId())
+      .searchBooks(q)
       .pipe(
         tap((books) => this.books.set(books)),
         catchError(() => of([] as Book[])),
@@ -77,7 +71,7 @@ export class BookStoreService {
     this.books.set([...prev.slice(0, idx), optimistic, ...prev.slice(idx + 1)]);
 
     this.bookApi
-      .updateBook(bookId, this.toRequestDto(optimistic), this.userId())
+      .updateBook(bookId, this.toRequestDto(optimistic))
       .pipe(
         catchError((err) => {
           // rollback
@@ -100,7 +94,7 @@ export class BookStoreService {
     this.books.set([...prev.slice(0, idx), optimistic, ...prev.slice(idx + 1)]);
 
     this.bookApi
-      .updateBook(bookId, this.toRequestDto(optimistic), this.userId())
+      .updateBook(bookId, this.toRequestDto(optimistic))
       .pipe(
         catchError(() => {
           // rollback
