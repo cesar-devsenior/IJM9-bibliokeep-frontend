@@ -3,11 +3,12 @@
 // with Intellisense and code completion in your
 // IDE or Text Editor.
 // ***********************************************
-// declare namespace Cypress {
-//   interface Chainable<Subject = any> {
-//     customCommand(param: any): typeof customCommand;
-//   }
-// }
+declare namespace Cypress {
+  interface Chainable<Subject = any> {
+    // customCommand(param: any): typeof customCommand;
+    login(username: string, password: string): Chainable<undefined>;
+  }
+}
 //
 // function customCommand(param: any): void {
 //   console.warn(param);
@@ -28,7 +29,13 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
+Cypress.Commands.add("login", (email, password) => {
+    cy.visit('/');
+    cy.get('[aria-label=Email]').type(email);
+    cy.get('[aria-label=Contraseña]').type(password);
+    cy.get('[type=submit]').click();
+    cy.url().should('include','/dashboard');
+ });
 //
 //
 // -- This is a child command --

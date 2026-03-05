@@ -1,4 +1,5 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { BookStatus } from '../../core/models/book.model';
 import { BookStoreService, type BookStatusFilter } from './store/book-store.service';
@@ -7,7 +8,7 @@ import { BookCardComponent } from './components/book-card/book-card.component';
 @Component({
   selector: 'app-library',
   standalone: true,
-  imports: [BookCardComponent],
+  imports: [BookCardComponent, RouterLink],
   templateUrl: './library.component.html'
 })
 export class LibraryComponent {

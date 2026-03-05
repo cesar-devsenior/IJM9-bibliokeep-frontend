@@ -55,6 +55,7 @@
                 routerLinkActive="bg-slate-900 text-white hover:bg-slate-900 hover:text-white"
                 [routerLink]="item.route"
                 (click)="closeMobileDrawer()"
+                [attr.data-cy]="item.label"
               >
                 <lucide-icon [img]="item.icon" class="h-5 w-5 shrink-0"></lucide-icon>
                 <span class="truncate" [ngClass]="{ 'lg:hidden': isSidebarCollapsed() }">
@@ -93,6 +94,7 @@
             class="inline-flex items-center justify-center rounded-lg p-2 text-slate-700 hover:bg-slate-100 active:bg-slate-200 lg:hidden"
             (click)="openMobileDrawer()"
             aria-label="Abrir menú"
+            data-cy="open-menu"
           >
             <lucide-icon [img]="Menu" class="h-5 w-5"></lucide-icon>
           </button>

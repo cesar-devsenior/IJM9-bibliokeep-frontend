@@ -11,6 +11,16 @@
       </p>
     </div>
 
+    <div class="flex items-center gap-2 sm:mb-1">
+      <a
+        class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 active:bg-slate-950"
+        routerLink="/library/new"
+        data-cy="open-book-create"
+      >
+        Nuevo libro
+      </a>
+    </div>
+
     <form class="flex w-full gap-2 sm:w-auto" (submit)="$event.preventDefault(); onSearchSubmit()">
       <input
         class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 shadow-sm outline-none placeholder:text-slate-400 focus:border-slate-300 sm:w-80"

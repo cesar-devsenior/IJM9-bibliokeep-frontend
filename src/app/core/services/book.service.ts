@@ -25,6 +25,10 @@ export class BookService {
     });
   }
 
+  createBook(dto: BookRequestDTO): Observable<Book> {
+    return this.http.post<Book>(this.baseUrl, dto);
+  }
+
   updateBook(id: number, dto: BookRequestDTO): Observable<Book> {
     return this.http.put<Book>(`${this.baseUrl}/${id}`, dto);
   }
