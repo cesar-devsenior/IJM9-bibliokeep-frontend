@@ -9,45 +9,32 @@
       </p>
     </div>
 
-    <button
-      type="button"
+    <button type="button"
       class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 active:bg-slate-100"
-      (click)="onCancel()"
-      data-cy="book-create-cancel"
-    >
+      (click)="onCancel()" data-cy="book-create-cancel">
       Cancelar
     </button>
   </div>
 
   <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-    <form
-      class="space-y-6"
-      [formGroup]="form"
-      (ngSubmit)="onSubmit()"
-      data-cy="book-create-form"
-    >
+    <form class="space-y-6" [formGroup]="form" (ngSubmit)="onSubmit()" data-cy="book-create-form">
       <div class="grid gap-4 md:grid-cols-2">
         <!-- ISBN -->
         <div>
           <label class="block text-sm font-medium text-slate-700" for="isbn">
             ISBN
           </label>
-          <input
-            id="isbn"
-            type="text"
+          <input id="isbn" type="text"
             class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 shadow-sm outline-none placeholder:text-slate-400 focus:border-slate-300"
-            formControlName="isbn"
-            placeholder="10 o 13 dígitos"
-            data-cy="book-isbn"
-          />
+            formControlName="isbn" placeholder="10 o 13 dígitos" data-cy="book-isbn" />
           @if (f.isbn.invalid && (f.isbn.dirty || f.isbn.touched)) {
-            <p class="mt-1 text-xs text-red-600">
-              @if (f.isbn.errors?.['required']) {
-                El ISBN es obligatorio.
-              } @else if (f.isbn.errors?.['pattern']) {
-                El ISBN debe tener 10 o 13 dígitos numéricos.
-              }
-            </p>
+          <p class="mt-1 text-xs text-red-600">
+            @if (f.isbn.errors?.['required']) {
+            El ISBN es obligatorio.
+            } @else if (f.isbn.errors?.['pattern']) {
+            El ISBN debe tener 10 o 13 dígitos numéricos.
+            }
+          </p>
           }
         </div>
 
@@ -56,22 +43,17 @@
           <label class="block text-sm font-medium text-slate-700" for="title">
             Título
           </label>
-          <input
-            id="title"
-            type="text"
+          <input id="title" type="text"
             class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 shadow-sm outline-none placeholder:text-slate-400 focus:border-slate-300"
-            formControlName="title"
-            placeholder="Título del libro"
-            data-cy="book-title"
-          />
+            formControlName="title" placeholder="Título del libro" data-cy="book-title" />
           @if (f.title.invalid && (f.title.dirty || f.title.touched)) {
-            <p class="mt-1 text-xs text-red-600">
-              @if (f.title.errors?.['required']) {
-                El título es obligatorio.
-              } @else if (f.title.errors?.['maxlength']) {
-                El título es demasiado largo.
-              }
-            </p>
+          <p class="mt-1 text-xs text-red-600">
+            @if (f.title.errors?.['required']) {
+            El título es obligatorio.
+            } @else if (f.title.errors?.['maxlength']) {
+            El título es demasiado largo.
+            }
+          </p>
           }
         </div>
       </div>
@@ -81,74 +63,45 @@
         <label class="block text-sm font-medium text-slate-700" for="authors">
           Autores
         </label>
-        <input
-          id="authors"
-          type="text"
+        <input id="authors" type="text"
           class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 shadow-sm outline-none placeholder:text-slate-400 focus:border-slate-300"
-          formControlName="authors"
-          placeholder="Separados por comas (ej: Autor 1, Autor 2)"
-          data-cy="book-authors"
-        />
+          formControlName="authors" placeholder="Separados por comas (ej: Autor 1, Autor 2)" data-cy="book-authors" />
         @if (f.authors.invalid && (f.authors.dirty || f.authors.touched)) {
-          <p class="mt-1 text-xs text-red-600">
-            @if (f.authors.errors?.['required']) {
-              Al menos un autor es obligatorio.
-            } @else if (f.authors.errors?.['maxlength']) {
-              La lista de autores es demasiado larga.
-            }
-          </p>
+        <p class="mt-1 text-xs text-red-600">
+          @if (f.authors.errors?.['required']) {
+          Al menos un autor es obligatorio.
+          } @else if (f.authors.errors?.['maxlength']) {
+          La lista de autores es demasiado larga.
+          }
+        </p>
         }
       </div>
 
       <!-- Descripción -->
       <div>
-        <label
-          class="block text-sm font-medium text-slate-700"
-          for="description"
-        >
+        <label class="block text-sm font-medium text-slate-700" for="description">
           Descripción
         </label>
-        <textarea
-          id="description"
-          rows="4"
+        <textarea id="description" rows="4"
           class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 shadow-sm outline-none placeholder:text-slate-400 focus:border-slate-300"
-          formControlName="description"
-          placeholder="Resumen o notas sobre el libro"
-          data-cy="book-description"
-        ></textarea>
+          formControlName="description" placeholder="Resumen o notas sobre el libro"
+          data-cy="book-description"></textarea>
         @if (f.description.invalid && (f.description.dirty || f.description.touched)) {
-          <p class="mt-1 text-xs text-red-600">
-            La descripción es demasiado larga.
-          </p>
+        <p class="mt-1 text-xs text-red-600">
+          La descripción es demasiado larga.
+        </p>
         }
       </div>
 
       <div class="grid gap-4 md:grid-cols-2">
         <!-- Thumbnail -->
         <div>
-          <label
-            class="block text-sm font-medium text-slate-700"
-            for="thumbnail"
-          >
+          <label class="block text-sm font-medium text-slate-700" for="thumbnail">
             URL de portada
           </label>
-          <input
-            id="thumbnail"
-            type="url"
-            class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 shadow-sm outline-none placeholder:text-slate-400 focus:border-slate-300"
-            formControlName="thumbnail"
-            placeholder="https://..."
-            data-cy="book-thumbnail"
-          />
-          @if (f.thumbnail.invalid && (f.thumbnail.dirty || f.thumbnail.touched)) {
-            <p class="mt-1 text-xs text-red-600">
-              @if (f.thumbnail.errors?.['pattern']) {
-                La URL no es válida.
-              } @else if (f.thumbnail.errors?.['maxlength']) {
-                La URL es demasiado larga.
-              }
-            </p>
-          }
+          <input type="file" accept="image/*" id="thumbnail"
+            class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 shadow-sm outline-none file:rounded-lg file:border-0 file:bg-slate-100 file:px-3 file:py-1 file:text-sm file:font-medium file:text-slate-700 hover:file:bg-slate-200 focus:border-slate-300"
+            (change)="onFileSelected($event)" data-cy="book-thumbnail">
         </div>
 
         <!-- Estado -->
@@ -156,22 +109,19 @@
           <label class="block text-sm font-medium text-slate-700" for="status">
             Estado
           </label>
-          <select
-            id="status"
+          <select id="status"
             class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-slate-300 focus:outline-none"
-            formControlName="status"
-            data-cy="book-status"
-          >
+            formControlName="status" data-cy="book-status">
             @for (s of statuses; track s.value) {
-              <option [value]="s.value">
-                {{ s.label }}
-              </option>
+            <option [value]="s.value">
+              {{ s.label }}
+            </option>
             }
           </select>
           @if (f.status.invalid && (f.status.dirty || f.status.touched)) {
-            <p class="mt-1 text-xs text-red-600">
-              El estado es obligatorio.
-            </p>
+          <p class="mt-1 text-xs text-red-600">
+            El estado es obligatorio.
+          </p>
           }
         </div>
       </div>
@@ -182,31 +132,21 @@
           <label class="block text-sm font-medium text-slate-700" for="rating">
             Calificación (1-5)
           </label>
-          <input
-            id="rating"
-            type="number"
-            min="1"
-            max="5"
+          <input id="rating" type="number" min="1" max="5"
             class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 shadow-sm outline-none placeholder:text-slate-400 focus:border-slate-300"
-            formControlName="rating"
-            data-cy="book-rating"
-          />
+            formControlName="rating" data-cy="book-rating" />
           @if (f.rating.invalid && (f.rating.dirty || f.rating.touched)) {
-            <p class="mt-1 text-xs text-red-600">
-              La calificación debe estar entre 1 y 5.
-            </p>
+          <p class="mt-1 text-xs text-red-600">
+            La calificación debe estar entre 1 y 5.
+          </p>
           }
         </div>
 
         <!-- Prestado -->
         <div class="flex items-center gap-2 pt-6">
-          <input
-            id="isLent"
-            type="checkbox"
-            class="h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-500"
-            formControlName="isLent"
-            data-cy="book-isLent"
-          />
+          <input id="isLent" type="checkbox"
+            class="h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-500" formControlName="isLent"
+            data-cy="book-isLent" />
           <label for="isLent" class="text-sm text-slate-700">
             Libro actualmente prestado
           </label>
@@ -214,28 +154,21 @@
       </div>
 
       <div class="flex items-center justify-end gap-3">
-        <button
-          type="button"
+        <button type="button"
           class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 active:bg-slate-100"
-          (click)="onCancel()"
-          data-cy="book-create-cancel-bottom"
-        >
+          (click)="onCancel()" data-cy="book-create-cancel-bottom">
           Cancelar
         </button>
-        <button
-          type="submit"
+        <button type="submit"
           class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 active:bg-slate-950 disabled:cursor-not-allowed disabled:opacity-60"
-          [disabled]="form.invalid || isSubmitting()"
-          data-cy="book-create-submit"
-        >
+          [disabled]="form.invalid || isSubmitting()" data-cy="book-create-submit">
           @if (isSubmitting()) {
-            Guardando…
+          Guardando…
           } @else {
-            Guardar libro
+          Guardar libro
           }
         </button>
       </div>
     </form>
   </div>
 </section>
-

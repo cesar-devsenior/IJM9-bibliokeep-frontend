@@ -44,11 +44,12 @@
     "@cypress/schematic": "^5.0.0",
     "@tailwindcss/postcss": "^4.1.12",
     "@vitest/coverage-v8": "^4.0.18",
+    "cypress": "15.11.0",
     "jsdom": "^27.1.0",
     "postcss": "^8.5.3",
+    "sonarqube-scanner": "^4.3.5",
     "tailwindcss": "^4.1.12",
     "typescript": "~5.9.2",
-    "vitest": "^4.0.8",
-    "cypress": "15.11.0"
+    "vitest": "^4.0.8"
   }
 }

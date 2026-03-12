@@ -35,7 +35,7 @@ describe('My First Test', () => {
   it('Creates a new book from library page', () => {
     cy.intercept('POST', '**/api/books', { statusCode: 201}).as('apiCall');
 
-    cy.login('cdiaz@exmple.com', 'cdiaz123');
+    cy.login('cdiaz@example.com', 'cdiaz123');
 
     cy.visit('/library');
 

@@ -1,4 +1,6 @@
 import { TestBed } from '@angular/core/testing';
+import { computed, signal } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { LibraryComponent } from './library.component';
 import { BookStoreService, type BookStatusFilter } from './store/book-store.service';
 import { BookStatus } from '../../core/models/book.model';
@@ -28,13 +30,14 @@ describe('LibraryComponent', () => {
             setStatusFilter: setStatusFilterSpy,
             updateStatusOptimistic: updateStatusOptimisticSpy,
             updateRatingOptimistic: updateRatingOptimisticSpy,
-            // signals leídas por el componente; devolvemos funciones simples
-            books: () => [],
-            isLoading: () => false,
-            statusFilter: () => 'ALL' as BookStatusFilter,
-            filteredBooks: () => [],
+            // Signals en lugar de funciones
+            books: signal([]),
+            isLoading: signal(false),
+            statusFilter: signal('ALL' as BookStatusFilter),
+            filteredBooks: computed(() => []),
           },
         },
+        { provide: ActivatedRoute, useValue: {} }
       ],
     }).compileComponents();
   });
@@ -48,9 +51,7 @@ describe('LibraryComponent', () => {
 
   it('should load collection on init (effect)', () => {
     const fixture = TestBed.createComponent(LibraryComponent);
-    const component = fixture.componentInstance as any;
-
-    component.store.loadCollection();
+    fixture.detectChanges();
 
     expect(loadCollectionSpy).toHaveBeenCalled();
   });

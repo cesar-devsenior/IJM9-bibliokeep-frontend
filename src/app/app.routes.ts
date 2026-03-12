@@ -5,7 +5,7 @@ import { DashboardPage } from './features/dashboard/dashboard.page';
 import { LibraryPage } from './features/library/library.page';
 import { LoansPage } from './features/loans/loans.page';
 import { Login } from './features/login/login';
-import { BookCreatePage } from './features/library/book-create.page';
+import { BookCreatePage } from './features/library/components/book-create/book-create.page';
 import { authGuard } from './core/guard/auth-guard';
 import { adminGuard } from './core/guard/admin-guard';
 
