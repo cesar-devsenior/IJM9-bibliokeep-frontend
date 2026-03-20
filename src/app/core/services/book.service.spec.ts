@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { BookService, type BookRequestDTO } from './book.service';
 import type { Book } from '../models/book.model';
 import { StorageService } from './storage.service';
+import { environment } from '../../../environments/environment';
 
 describe('BookService', () => {
   let httpGetSpy: ReturnType<typeof vi.fn>;
@@ -43,7 +44,7 @@ describe('BookService', () => {
     let emitted: Book[] | null = null;
     service.getAllBooks().subscribe((resp) => (emitted = resp));
 
-    expect(httpGetSpy).toHaveBeenCalledWith('http://localhost:8080/api/books');
+    expect(httpGetSpy).toHaveBeenCalledWith(`${environment.apiUrl}/api/books`);
     expect(emitted).toBe(books);
   });
 
@@ -56,7 +57,7 @@ describe('BookService', () => {
     service.searchBooks('angular').subscribe((resp) => (emitted = resp));
 
     expect(httpGetSpy).toHaveBeenCalledWith(
-      'http://localhost:8080/api/books/search',
+      `${environment.apiUrl}/api/books/search`,
       { params: { q: 'angular' } }
     );
     expect(emitted).toBe(books);
@@ -82,7 +83,7 @@ describe('BookService', () => {
     service.updateBook(1, dto).subscribe((resp) => (emitted = resp));
 
     expect(httpPutSpy).toHaveBeenCalledWith(
-      'http://localhost:8080/api/books/1',
+      `${environment.apiUrl}/api/books/1`,
       dto
     );
     expect(emitted).toBe(updated);

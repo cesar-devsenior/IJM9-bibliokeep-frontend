@@ -2,6 +2,7 @@ import { TestBed } from "@angular/core/testing";
 import { FileService } from "./file.service";
 import { FileResponse } from "../models/file-response.model";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { environment } from "../../../environments/environment";
 
 describe('FileService', () => {
     let httpMock: HttpTestingController;
@@ -61,7 +62,7 @@ describe('FileService', () => {
             }
         });
 
-        const req = httpMock.expectOne('http://localhost:8080/api/file/upload');
+        const req = httpMock.expectOne(`${environment.apiUrl}/api/file/upload`);
         expect(req.request.method).toBe('POST');
         expect(req.request.body instanceof FormData).toBe(true);
 

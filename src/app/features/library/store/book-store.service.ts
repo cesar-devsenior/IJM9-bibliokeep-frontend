@@ -3,6 +3,7 @@ import { catchError, finalize, of, tap } from 'rxjs';
 
 import { BookService } from '../../../core/services/book.service';
 import { Book, BookStatus } from '../../../core/models/book.model';
+import { environment } from '../../../../environments/environment';
 
 export type BookStatusFilter = BookStatus | 'ALL';
 
@@ -42,7 +43,7 @@ export class BookStoreService {
         next: (books) => {
           this.books.set(books.map(b => {
             if (!b.thumbnail.startsWith('http')) {
-              b.thumbnail = `http://localhost:8080` + b.thumbnail;
+              b.thumbnail = environment.apiUrl + b.thumbnail;
             }
             return b;
           }));

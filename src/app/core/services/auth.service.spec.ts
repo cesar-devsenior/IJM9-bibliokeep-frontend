@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { StorageService } from './storage.service';
 import type { LoginCredentials } from '../models/login-credentials.model';
 import type { AuthResponse } from '../models/auth-response.model';
+import { environment } from '../../../environments/environment';
 
 describe('AuthService', () => {
   let httpPostSpy: ReturnType<typeof vi.fn>;
@@ -56,7 +57,7 @@ describe('AuthService', () => {
     });
 
     expect(httpPostSpy).toHaveBeenCalledWith(
-      'http://localhost:8080/auth/login',
+      `${environment.apiUrl}/auth/login`,
       credentials
     );
     expect(setTokenSpy).toHaveBeenCalledWith('fake-token');

@@ -4,8 +4,8 @@ import { TokenInformacion } from "../models/auth-response.model";
 
 @Injectable({ providedIn: "root" })
 export class StorageService {
-    private TOKEN_KEY = "token";
-    private storage = localStorage;
+    private readonly TOKEN_KEY = "token";
+    private readonly storage = localStorage;
 
     setToken(token: string): void {
         this.storage.setItem(this.TOKEN_KEY, token);

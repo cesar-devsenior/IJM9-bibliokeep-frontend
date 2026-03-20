@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { StatsService } from './stats.service';
 import type { Stats } from '../models/stats.model';
+import { environment } from '../../../environments/environment';
 
 describe('StatsService', () => {
   let httpGetSpy: ReturnType<typeof vi.fn>;
@@ -41,7 +42,7 @@ describe('StatsService', () => {
     service.getStats().subscribe((resp) => (emitted = resp));
 
     expect(httpGetSpy).toHaveBeenCalledWith(
-      'http://localhost:8080/api/stats/dashboard'
+      `${environment.apiUrl}/api/stats/dashboard`
     );
     expect(emitted).toBe(stats);
   });

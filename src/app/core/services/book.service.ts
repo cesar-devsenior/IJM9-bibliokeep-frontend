@@ -1,15 +1,16 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Book } from '../models/book.model';
 import { StorageService } from './storage.service';
+import { environment } from '../../../environments/environment';
 
 export type BookRequestDTO = Omit<Book, 'id'>;
 
 @Injectable({ providedIn: 'root' })
 export class BookService {
-  private readonly baseUrl = 'http://localhost:8080/api/books';
+  private readonly baseUrl = `${environment.apiUrl}/api/books`;
 
   constructor(
     private readonly http: HttpClient, 
