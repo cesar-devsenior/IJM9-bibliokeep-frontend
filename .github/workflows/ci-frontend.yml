@@ -21,8 +21,8 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'package-lock.json'
 
-      - name: "Instalar Angular CLi"
-        run: npm i -g @angular/cli
+      - name: "Instalar paquetes"
+        run: npm i
   
       - name: "Angular Build"
         run: npm run build:production
