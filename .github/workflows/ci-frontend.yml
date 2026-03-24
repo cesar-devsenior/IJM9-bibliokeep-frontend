@@ -28,7 +28,7 @@ jobs:
         run: npm run build:production
 
       - name: "Angular Test"
-        run: npm test -- --watch=false --browsers=ChromeHeadless
+        run: ng test --no-watch
 
       - name: "Obtener la version del proyecto"
         id: get_version
