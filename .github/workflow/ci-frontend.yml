@@ -1,0 +1,68 @@
+name: "Frontend CI: Angular 21"
+
+on:
+  push: 
+    branches: 
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.VERSION }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: "Configurar Node 22"
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+
+      - name: "Angular Build"
+        run: npm run build:production
+
+      - name: "Angular Test"
+        run: npm test -- --watch=false --browsers=ChromeHeadless
+
+      - name: "Obtener la version del proyecto"
+        id: get_version
+        run: echo "VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: "Generar zip"
+        run: zip -r bibliokeep-frontend-dist.zip dist/
+
+      - name: "Almacenar la distribucion"
+        uses: actions/upload-artifact@v6
+        with:
+          name: frontend-binary
+          path: ./bibliokeep-frontend-dist.zip
+
+  publish-release:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: "Descargar el Zip"
+        uses: actions/download-artifact@v6
+        with:
+          name: frontend-binary
+          path: ./release-assets
+
+      - name: "Crear el release de Github"
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.build-and-test.outputs.version }}-${{ github.run_number }}
+          name: Release v${{ needs.build-and-test.outputs.version }}
+          files: ./release-assets/*.zip
+          body: |
+            ## Automated Release
+            - Commit: ${{ github.sha }}
+            - Status: Verified by CI
+            - Environment: Angular 21 / Node 22
