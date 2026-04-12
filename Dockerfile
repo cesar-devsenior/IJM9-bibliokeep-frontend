@@ -18,6 +18,8 @@ RUN npm run build:production
 # -- Stage 2 - Runner
 FROM nginx:stable-alpine
 
+ARG API_URL
+
 # Copiar la configuración personalizada de Nginx a la imagen
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
