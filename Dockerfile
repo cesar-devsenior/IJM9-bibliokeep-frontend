@@ -18,7 +18,7 @@ RUN npm run build:production
 # -- Stage 2 - Runner
 FROM nginx:stable-alpine
 
-ARG API_URL
+ENV API_URL=http://backend:8080/
 
 # Copiar la configuración personalizada de Nginx a la imagen
 COPY nginx.conf /etc/nginx/conf.d/default.conf
